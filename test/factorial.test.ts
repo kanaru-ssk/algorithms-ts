@@ -19,3 +19,13 @@ test("args: 10 return: 3628800", () => {
   const result = factorial(10);
   expect(result).toBe(3628800);
 });
+
+test("args: 1.1 return: 0", () => {
+  const result = factorial(1.1);
+  expect(result).toBe(0);
+});
+
+test("args: -1 return: 0", () => {
+  const result = factorial(-1);
+  expect(result).toBe(0);
+});
