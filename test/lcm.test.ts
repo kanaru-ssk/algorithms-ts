@@ -15,12 +15,12 @@ test("args: (1, 1) return: 1", () => {
   expect(result).toBe(1);
 });
 
-test("args: (10, 0) return: 10", () => {
+test("args: (10, 0) return: 0", () => {
   const result = lcm(10, 0);
   expect(result).toBe(0);
 });
 
-test("args: (0, 10) return: 10", () => {
+test("args: (0, 10) return: 0", () => {
   const result = lcm(0, 10);
   expect(result).toBe(0);
 });
