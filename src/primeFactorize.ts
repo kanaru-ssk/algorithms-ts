@@ -3,6 +3,8 @@
 type Result = { [key: number]: number };
 
 export function primeFactorize(n: number): Result {
+  if (!Number.isInteger(n) || n <= 0) return {};
+
   let result: Result = {};
   for (let i = 2; i * i <= n; i++) {
     if (n % i !== 0) continue;
