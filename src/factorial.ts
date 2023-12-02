@@ -5,7 +5,7 @@ export function factorial(n: number): number {
   if (!Number.isInteger(n) || n < 0) return 0;
 
   let result = 1;
-  for (let i = n; i > 1; i--) result *= i;
+  for (let i = n; i > 1; --i) result *= i;
 
   return result;
 }
