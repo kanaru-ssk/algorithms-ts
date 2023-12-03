@@ -1,80 +1,35 @@
 import { gcd, gcdArray } from "../src/gcd";
 
 describe("gcd", () => {
-  test("args: (18, 12) return: 6", () => {
-    const result = gcd(18, 12);
-    expect(result).toBe(6);
-  });
+  const samples = [
+    { input: [18, 12], expected: 6 },
+    { input: [12, 18], expected: 6 },
+    { input: [1, 1], expected: 1 },
+    { input: [10, 0], expected: 10 },
+    { input: [0, 10], expected: 10 },
+    { input: [0, 0], expected: 0 },
+    { input: [10.5, 4.5], expected: 1.5 },
+    { input: [-10, -15], expected: 5 },
+  ];
 
-  test("args: (12, 18) return: 6", () => {
-    const result = gcd(12, 18);
-    expect(result).toBe(6);
-  });
-
-  test("args: (1, 1) return: 1", () => {
-    const result = gcd(1, 1);
-    expect(result).toBe(1);
-  });
-
-  test("args: (10, 0) return: 10", () => {
-    const result = gcd(10, 0);
-    expect(result).toBe(10);
-  });
-
-  test("args: (0, 10) return: 10", () => {
-    const result = gcd(0, 10);
-    expect(result).toBe(10);
-  });
-
-  test("args: (0, 0) return: 0", () => {
-    const result = gcd(0, 0);
-    expect(result).toBe(0);
-  });
-
-  test("args: (10.5, 4.5) return: 1.5", () => {
-    const result = gcd(10.5, 4.5);
-    expect(result).toBe(1.5);
-  });
-
-  test("args: (-10, -15) return: 5", () => {
-    const result = gcd(-10, -15);
-    expect(result).toBe(5);
+  test.each(samples)("($input) => $expected", ({ input, expected }) => {
+    expect(gcd(input[0], input[1])).toEqual(expected);
   });
 });
 
 describe("gcdArray", () => {
-  test("args: [18, 12] return: 6", () => {
-    const result = gcdArray([18, 12]);
-    expect(result).toBe(6);
-  });
+  const samples = [
+    { input: [18, 12], expected: 6 },
+    { input: [36, 12, 48, 120], expected: 12 },
+    { input: [0, 0, 0], expected: 0 },
+    { input: [-45, -10, -55], expected: 5 },
+    { input: [10.5, 1.5, 4.5], expected: 1.5 },
+    { input: [-45, 0, 55], expected: 5 },
+    { input: [3], expected: 3 },
+    { input: [], expected: 0 },
+  ];
 
-  test("args: [36, 12, 48, 120] return: 12", () => {
-    const result = gcdArray([36, 12, 48, 120]);
-    expect(result).toBe(12);
-  });
-
-  test("args: [0, 0, 0] return: 0", () => {
-    const result = gcdArray([0, 0, 0]);
-    expect(result).toBe(0);
-  });
-
-  test("args: [-45, 0, 55] return: 5", () => {
-    const result = gcdArray([-45, 0, 55]);
-    expect(result).toBe(5);
-  });
-
-  test("args: [10.5, 0, 4.5] return: 1.5", () => {
-    const result = gcdArray([10.5, 0, 4.5]);
-    expect(result).toBe(1.5);
-  });
-
-  test("args: [3] return: 3", () => {
-    const result = gcdArray([3]);
-    expect(result).toBe(3);
-  });
-
-  test("args: [] return: 0", () => {
-    const result = gcdArray([]);
-    expect(result).toBe(0);
+  test.each(samples)("($input) => $expected", ({ input, expected }) => {
+    expect(gcdArray(input)).toEqual(expected);
   });
 });
