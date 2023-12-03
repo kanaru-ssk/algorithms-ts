@@ -26,6 +26,7 @@ describe("gcdArray", () => {
     { input: [10.5, 1.5, 4.5], expected: 1.5 },
     { input: [-45, 0, 55], expected: 5 },
     { input: [3], expected: 3 },
+    { input: [0], expected: 0 },
     { input: [], expected: 0 },
   ];
 

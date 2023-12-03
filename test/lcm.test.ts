@@ -26,6 +26,7 @@ describe("lcmArray", () => {
     { input: [10.5, 1.5, 4.5], expected: 31.5 },
     { input: [-45, 0, 55], expected: 0 },
     { input: [3], expected: 3 },
+    { input: [0], expected: 0 },
     { input: [], expected: 0 },
   ];
 

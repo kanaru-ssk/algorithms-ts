@@ -1,6 +1,6 @@
 import { dynamicProgramming } from "../src/dynamicProgramming";
 
-describe("fibonacci number", () => {
+describe("fibonacci", () => {
   const samples = [
     { input: 1, expected: 1 },
     { input: 2, expected: 1 },
