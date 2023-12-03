@@ -1,5 +1,7 @@
 // フィボナッチ数列
 
+import { dynamicProgramming } from "./dynamicProgramming";
+
 // 再帰法
 export function fib1(n: number): number {
   if (!Number.isInteger(n)) return 0;
@@ -15,13 +17,13 @@ export function fib1(n: number): number {
 export function fib2(n: number): number {
   if (!Number.isInteger(n) || n <= 0) return 0;
 
-  let a: number[] = Array(n);
-
-  a[0] = a[1] = 1;
-
-  for (let i = 2; i < n; ++i) {
-    a[i] = a[i - 1] + a[i - 2];
+  function calcCell(table: number[][], y: number, x: number): number {
+    if (x <= 0) return 0;
+    if (x <= 2) return 1;
+    return table[y][x - 1] + table[y][x - 2];
   }
 
-  return a[n - 1];
+  const result = dynamicProgramming(n, calcCell);
+
+  return result;
 }
