@@ -29,14 +29,12 @@ describe("fibonacci number", () => {
 describe("bin packing", () => {
   const items = [4, 7, 8, 5, 1];
   function calcCell(table: boolean[][], y: number, x: number): boolean {
-    if (y === 0)
-      if (x === 0) return true;
-      else return false;
+    if (y === 0) return x === 0;
 
     // 上のマスがtrueの場合 : true
     if (table[y - 1][x]) return true;
     // items[y - 1]が入らない場合 : false
-    if (x - items[y - 1] < 0) return false;
+    if (x < items[y - 1]) return false;
     // 上の行のx-items[y - 1]を代入
     return table[y - 1][x - items[y - 1]];
   }
@@ -69,7 +67,7 @@ describe("knapsack", () => {
   function calcCell(table: number[][], y: number, x: number): number {
     if (y === 0) return 0;
     // items[i]が入らない場合 : 上のマスを代入
-    if (items[y - 1].cost > x) return table[y - 1][x];
+    if (x < items[y - 1].cost) return table[y - 1][x];
     // items[i]が入る場合 : 上のマスと比較して大きい方を代入
     else
       return Math.max(
