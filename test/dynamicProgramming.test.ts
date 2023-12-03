@@ -1,51 +1,94 @@
 import { dynamicProgramming } from "../src/dynamicProgramming";
 
-describe("bin packing", () => {
-  const items = [
-    { id: 1, cost: 150, value: 150 },
-    { id: 2, cost: 200, value: 200 },
-    { id: 3, cost: 250, value: 250 },
-    { id: 4, cost: 200, value: 200 },
-    { id: 5, cost: 50, value: 50 },
-  ];
+describe("fibonacci number", () => {
+  function calcCell(table: number[][], y: number, x: number): number {
+    if (x === 0) return 0;
+    if (x <= 2) return 1;
+    return table[y][x - 1] + table[y][x - 2];
+  }
 
-  test("pattern problem 1 return: 500, true", () => {
-    const capacity = 500;
-    const result = dynamicProgramming(capacity, items);
-
-    expect(result).toBe(500);
-    expect(result === capacity).toBe(true);
+  test("capacity 1 return 1", () => {
+    const capacity = 1;
+    const result = dynamicProgramming(capacity, calcCell);
+    expect(result).toBe(1);
   });
 
-  test("pattern 2 return: 700, false", () => {
-    const capacity = 720;
-    const result = dynamicProgramming(capacity, items);
+  test("capacity 2 return 1", () => {
+    const capacity = 2;
+    const result = dynamicProgramming(capacity, calcCell);
+    expect(result).toBe(1);
+  });
 
-    expect(result).toBe(700);
-    expect(result === capacity).toBe(false);
+  test("capacity 6 return 8", () => {
+    const capacity = 6;
+    const result = dynamicProgramming(capacity, calcCell);
+    expect(result).toBe(8);
+  });
+});
+
+describe("bin packing", () => {
+  const items = [4, 7, 8, 5, 1];
+  function calcCell(table: boolean[][], y: number, x: number): boolean {
+    if (y === 0)
+      if (x === 0) return true;
+      else return false;
+
+    // 上のマスがtrueの場合 : true
+    if (table[y - 1][x]) return true;
+    // items[y - 1]が入らない場合 : false
+    if (x - items[y - 1] < 0) return false;
+    // 上の行のx-items[y - 1]を代入
+    return table[y - 1][x - items[y - 1]];
+  }
+
+  test("pattern problem 1 return true", () => {
+    const capacity = 10;
+    const result = dynamicProgramming(capacity, calcCell, items);
+    expect(result).toBe(true);
+  });
+
+  test("pattern problem 1 return true", () => {
+    const capacity = 22;
+    const result = dynamicProgramming(capacity, calcCell, items);
+    expect(result).toBe(false);
   });
 });
 
 describe("knapsack", () => {
-  const items = [
-    { id: 1, cost: 150, value: 4 },
-    { id: 2, cost: 200, value: 7 },
-    { id: 3, cost: 250, value: 8 },
-    { id: 4, cost: 200, value: 5 },
-    { id: 5, cost: 50, value: 1 },
+  type Item = {
+    cost: number;
+    value: number;
+  };
+  const items: Item[] = [
+    { cost: 3, value: 4 },
+    { cost: 4, value: 7 },
+    { cost: 5, value: 8 },
+    { cost: 4, value: 5 },
+    { cost: 1, value: 1 },
   ];
+  function calcCell(table: number[][], y: number, x: number): number {
+    if (y === 0) return 0;
+    // items[i]が入らない場合 : 上のマスを代入
+    if (items[y - 1].cost > x) return table[y - 1][x];
+    // items[i]が入る場合 : 上のマスと比較して大きい方を代入
+    else
+      return Math.max(
+        table[y - 1][x - items[y - 1].cost] + items[y - 1].value,
+        table[y - 1][x]
+      );
+  }
 
-  test("pattern 1 return: 16", () => {
-    const capacity = 500;
-    const result = dynamicProgramming(capacity, items);
+  test("pattern 1 return 16", () => {
+    const capacity = 10;
+    const result = dynamicProgramming(capacity, calcCell, items);
 
     expect(result).toBe(16);
   });
 
-  test("pattern 2 return: 21", () => {
-    const capacity = 720;
-    const result = dynamicProgramming(capacity, items);
+  test("pattern 2 return 25", () => {
+    const capacity = 30;
+    const result = dynamicProgramming(capacity, calcCell, items);
 
-    expect(result).toBe(21);
+    expect(result).toBe(25);
   });
 });
