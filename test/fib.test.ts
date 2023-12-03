@@ -1,55 +1,26 @@
 import { fib1, fib2 } from "../src/fib";
 
+const samples = [
+  [1, 1],
+  [2, 1],
+  [3, 2],
+  [4, 3],
+  [5, 5],
+  [6, 8],
+  [20, 6765],
+  [0, 0],
+  [1.1, 0],
+  [-1, 0],
+];
+
 describe("fib1", () => {
-  test("args: 1 return: 1", () => {
-    const result = fib1(1);
-    expect(result).toBe(1);
-  });
-
-  test("args: 6 return: 8", () => {
-    const result = fib1(6);
-    expect(result).toBe(8);
-  });
-
-  test("args: 0 return: 1", () => {
-    const result = fib1(0);
-    expect(result).toBe(1);
-  });
-
-  test("args: 1.1 return: 0", () => {
-    const result = fib1(1.1);
-    expect(result).toBe(0);
-  });
-
-  test("args: -1 return: 1", () => {
-    const result = fib1(-1);
-    expect(result).toBe(1);
+  test.each(samples)("%i => %i", (input, expected) => {
+    expect(fib1(input)).toEqual(expected);
   });
 });
 
 describe("fib2", () => {
-  test("args: 1 return: 1", () => {
-    const result = fib2(1);
-    expect(result).toBe(1);
-  });
-
-  test("args: 6 return: 8", () => {
-    const result = fib2(6);
-    expect(result).toBe(8);
-  });
-
-  test("args: 0 return: 0", () => {
-    const result = fib2(0);
-    expect(result).toBe(0);
-  });
-
-  test("args: 1.1 return: 0", () => {
-    const result = fib2(1.1);
-    expect(result).toBe(0);
-  });
-
-  test("args: -1 return: 0", () => {
-    const result = fib2(-1);
-    expect(result).toBe(0);
+  test.each(samples)("%i => %i", (input, expected) => {
+    expect(fib2(input)).toEqual(expected);
   });
 });
