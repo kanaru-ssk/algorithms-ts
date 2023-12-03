@@ -1,4 +1,4 @@
-// ナップサック問題
+// 動的計画法
 
 import { gcdArray } from "./gcd";
 
@@ -8,7 +8,7 @@ type Item = {
   value: number;
 };
 
-export function knapsack(capacity: number, items: Item[]): number {
+export function dynamicProgramming(capacity: number, items: Item[]): number {
   // 最大公約数で割ってtableの大きさを最適化
   const gcd = gcdArray([capacity, ...items.map(({ cost }) => cost)]);
   capacity /= gcd;
