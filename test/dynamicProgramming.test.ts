@@ -2,26 +2,26 @@ import { dynamicProgramming } from "../src/dynamicProgramming";
 
 describe("fibonacci number", () => {
   function calcCell(table: number[][], y: number, x: number): number {
-    if (x === 0) return 0;
+    if (x <= 0) return 0;
     if (x <= 2) return 1;
     return table[y][x - 1] + table[y][x - 2];
   }
 
-  test("capacity 1 return 1", () => {
-    const capacity = 1;
-    const result = dynamicProgramming(capacity, calcCell);
+  test("n 1 return 1", () => {
+    const n = 1;
+    const result = dynamicProgramming(1, n + 1, calcCell);
     expect(result).toBe(1);
   });
 
-  test("capacity 2 return 1", () => {
-    const capacity = 2;
-    const result = dynamicProgramming(capacity, calcCell);
+  test("n 2 return 1", () => {
+    const n = 2;
+    const result = dynamicProgramming(1, n + 1, calcCell);
     expect(result).toBe(1);
   });
 
-  test("capacity 6 return 8", () => {
-    const capacity = 6;
-    const result = dynamicProgramming(capacity, calcCell);
+  test("n 6 return 8", () => {
+    const n = 6;
+    const result = dynamicProgramming(1, n + 1, calcCell);
     expect(result).toBe(8);
   });
 });
@@ -43,13 +43,13 @@ describe("bin packing", () => {
 
   test("pattern problem 1 return true", () => {
     const capacity = 10;
-    const result = dynamicProgramming(capacity, calcCell, items);
+    const result = dynamicProgramming(items.length + 1, capacity + 1, calcCell);
     expect(result).toBe(true);
   });
 
   test("pattern problem 1 return true", () => {
     const capacity = 22;
-    const result = dynamicProgramming(capacity, calcCell, items);
+    const result = dynamicProgramming(items.length + 1, capacity + 1, calcCell);
     expect(result).toBe(false);
   });
 });
@@ -80,14 +80,14 @@ describe("knapsack", () => {
 
   test("pattern 1 return 16", () => {
     const capacity = 10;
-    const result = dynamicProgramming(capacity, calcCell, items);
+    const result = dynamicProgramming(items.length + 1, capacity + 1, calcCell);
 
     expect(result).toBe(16);
   });
 
   test("pattern 2 return 25", () => {
     const capacity = 30;
-    const result = dynamicProgramming(capacity, calcCell, items);
+    const result = dynamicProgramming(items.length + 1, capacity + 1, calcCell);
 
     expect(result).toBe(25);
   });

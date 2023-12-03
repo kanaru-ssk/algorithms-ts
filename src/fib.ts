@@ -23,7 +23,7 @@ export function fib2(n: number): number {
     return table[y][x - 1] + table[y][x - 2];
   }
 
-  const result = dynamicProgramming(n, calcCell);
+  const result = dynamicProgramming(1, n + 1, calcCell);
 
   return result;
 }

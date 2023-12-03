@@ -1,12 +1,10 @@
 // 動的計画法
 
-export function dynamicProgramming<T, U>(
-  capacity: number,
-  calcCell: (table: T[][], y: number, x: number) => T,
-  items?: U[]
+export function dynamicProgramming<T>(
+  tableH: number,
+  tableW: number,
+  calcCell: (table: T[][], y: number, x: number) => T
 ) {
-  const tableH = items ? items.length + 1 : 1;
-  const tableW = capacity + 1;
   let table: T[][] = Array.from({ length: tableH }, () =>
     Array.from({ length: tableW })
   );
