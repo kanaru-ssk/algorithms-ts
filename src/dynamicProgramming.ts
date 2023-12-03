@@ -4,7 +4,7 @@ export function dynamicProgramming<T, U>(
   items: U[],
   capacity: number,
   calcCell: (y: number, x: number, table: T[][], items: U[]) => T
-) {
+): T {
   const tableH = items.length + 1;
   const tableW = capacity + 1;
   let table: T[][] = Array.from({ length: tableH }, () =>
