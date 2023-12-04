@@ -107,3 +107,32 @@ describe("knapsack", () => {
     }
   );
 });
+
+describe("lcs", () => {
+  const samples = [
+    {
+      input: {
+        a: "ACCGGTCGAGTGCGCGGAAGCCGGCCGAA",
+        b: "GTCGTTCGGAATGCCGTTGCTCTGTAAA",
+      },
+      expected: 20,
+    },
+    { input: { a: "A00B0000C", b: "XXAXBXCXX" }, expected: 3 },
+  ];
+
+  function lcs(
+    table: number[],
+    [y, x]: number[],
+    element: { a: string; b: string }
+  ): number {
+    if (y === 0 || x === 0) return 0;
+    const h = element.b.length + 1;
+    if (element.a.charAt(y - 1) === element.b.charAt(x - 1))
+      return table[(y - 1) * h + x - 1] + 1;
+    return Math.max(table[(y - 1) * h + x], table[y * h + x - 1]);
+  }
+
+  test.each(samples)("($input, fib) => $expected", ({ input, expected }) => {
+    expect(dynamicProgramming(input, lcs)).toEqual(expected);
+  });
+});
