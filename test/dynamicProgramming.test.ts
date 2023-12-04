@@ -2,57 +2,60 @@ import { dynamicProgramming } from "../src/dynamicProgramming";
 
 describe("fibonacci", () => {
   const samples = [
-    { input: 1, expected: 1 },
-    { input: 2, expected: 1 },
-    { input: 3, expected: 2 },
-    { input: 4, expected: 3 },
-    { input: 5, expected: 5 },
-    { input: 6, expected: 8 },
-    { input: 20, expected: 6765 },
-    { input: 0, expected: 0 },
+    { input: { n: 0 }, expected: 0 },
+    { input: { n: 1 }, expected: 1 },
+    { input: { n: 2 }, expected: 1 },
+    { input: { n: 3 }, expected: 2 },
+    { input: { n: 4 }, expected: 3 },
+    { input: { n: 5 }, expected: 5 },
+    { input: { n: 6 }, expected: 8 },
+    { input: { n: 20 }, expected: 6765 },
   ];
 
-  function fib(y: number, x: number, table: number[][]): number {
-    if (x <= 0) return 0;
-    if (x <= 2) return 1;
-    return table[y][x - 1] + table[y][x - 2];
+  function fib(table: number[], [i]: number[]): number {
+    if (i <= 0) return 0;
+    if (i <= 2) return 1;
+    return table[i - 1] + table[i - 2];
   }
 
-  test.each(samples)(
-    "([], $input, fib) => $expected",
-    ({ input, expected }) => {
-      expect(dynamicProgramming([], input, fib)).toEqual(expected);
-    }
-  );
+  test.each(samples)("($input, fib) => $expected", ({ input, expected }) => {
+    expect(dynamicProgramming(input, fib)).toEqual(expected);
+  });
 });
 
 describe("bin packing", () => {
-  const samples = [
+  type Input = {
+    items: number[];
+    capacity: number;
+  };
+  type Sample = {
+    input: Input;
+    expected: boolean;
+  };
+  const samples: Sample[] = [
     { input: { items: [4, 7, 8, 5, 1], capacity: 10 }, expected: true },
     { input: { items: [4, 7, 8, 5, 1], capacity: 22 }, expected: false },
   ];
 
   function binPacking(
-    y: number,
-    x: number,
-    table: boolean[][],
-    items: number[]
+    table: boolean[],
+    [y, x]: number[],
+    element: Input
   ): boolean {
+    const h = element.capacity + 1;
     if (y === 0) return x === 0;
     // 上のマスがtrueの場合 : true
-    if (table[y - 1][x]) return true;
+    if (table[(y - 1) * h + x]) return true;
     // items[y - 1]が入らない場合 : false
-    if (x < items[y - 1]) return false;
+    if (x < element.items[y - 1]) return false;
     // 上の行のx-items[y - 1]を代入
-    return table[y - 1][x - items[y - 1]];
+    return table[(y - 1) * h + x - element.items[y - 1]];
   }
 
   test.each(samples)(
-    "($input.items, $input.capacity, binPacking) => $expected",
+    "($input, binPacking) => $expected",
     ({ input, expected }) => {
-      expect(
-        dynamicProgramming(input.items, input.capacity, binPacking)
-      ).toEqual(expected);
+      expect(dynamicProgramming(input, binPacking)).toEqual(expected);
     }
   );
 });
@@ -61,6 +64,14 @@ describe("knapsack", () => {
   type Item = {
     cost: number;
     value: number;
+  };
+  type Input = {
+    items: Item[];
+    capacity: number;
+  };
+  type Sample = {
+    input: Input;
+    expected: number;
   };
 
   const items: Item[] = [
@@ -71,33 +82,28 @@ describe("knapsack", () => {
     { cost: 1, value: 1 },
   ];
 
-  const samples = [
+  const samples: Sample[] = [
     { input: { items, capacity: 10 }, expected: 16 },
     { input: { items, capacity: 22 }, expected: 25 },
   ];
 
-  function knapsack(
-    y: number,
-    x: number,
-    table: number[][],
-    items: Item[]
-  ): number {
+  function knapsack(table: number[], [y, x]: number[], element: Input): number {
+    const h = element.capacity + 1;
     if (y === 0) return 0;
     // items[i]が入らない場合 : 上のマスを代入
-    if (x < items[y - 1].cost) return table[y - 1][x];
+    if (x < element.items[y - 1].cost) return table[(y - 1) * h + x];
     // items[i]が入る場合 : 上のマスと比較して大きい方を代入
     return Math.max(
-      table[y - 1][x - items[y - 1].cost] + items[y - 1].value,
-      table[y - 1][x]
+      table[(y - 1) * h + x - element.items[y - 1].cost] +
+        element.items[y - 1].value,
+      table[(y - 1) * h + x]
     );
   }
 
   test.each(samples)(
-    "($input.items, $input.capacity, knapsack) => $expected",
+    "($input, knapsack) => $expected",
     ({ input, expected }) => {
-      expect(dynamicProgramming(input.items, input.capacity, knapsack)).toEqual(
-        expected
-      );
+      expect(dynamicProgramming(input, knapsack)).toEqual(expected);
     }
   );
 });

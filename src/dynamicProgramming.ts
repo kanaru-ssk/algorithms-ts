@@ -1,21 +1,31 @@
 // 動的計画法 (Dynamic Programming)
 
-export function dynamicProgramming<T, U>(
-  items: U[],
-  capacity: number,
-  calcCell: (y: number, x: number, table: T[][], items: U[]) => T
-): T {
-  const tableH = items.length + 1;
-  const tableW = capacity + 1;
-  let table: T[][] = Array.from({ length: tableH }, () =>
-    Array.from({ length: tableW })
-  );
+export function dynamicProgramming<T extends Object, U>(
+  elements: T,
+  calcCell: (table: U[], iterators: number[], elements: T) => U
+): U {
+  const lengths = calcLengths(elements);
+  const table: U[] = [];
 
-  for (let y = 0; y < tableH; y++) {
-    for (let x = 0; x < tableW; x++) {
-      table[y][x] = calcCell(y, x, table, items);
+  (function makeTable(iterators: number[]) {
+    if (lengths.length === iterators.length) {
+      table.push(calcCell(table, iterators, elements));
+    } else {
+      const length = lengths[iterators.length];
+      for (let i = 0; i < length; i++) {
+        makeTable([...iterators, i]);
+      }
     }
-  }
+  })([]);
 
-  return table[tableH - 1][tableW - 1];
+  return table[table.length - 1];
+}
+
+function calcLengths<T extends Object>(elements: T): number[] {
+  return Object.values(elements).map((value) => {
+    if (typeof value === "number") return value + 1;
+    if (typeof value === "string") return value.length + 1;
+    if (Array.isArray(value)) return value.length + 1;
+    return 1;
+  });
 }
