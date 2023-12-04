@@ -1,4 +1,4 @@
-// 動的計画法
+// 動的計画法 (Dynamic Programming)
 
 export function dynamicProgramming<T, U>(
   items: U[],

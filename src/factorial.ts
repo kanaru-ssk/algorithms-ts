@@ -1,4 +1,4 @@
-// 階乗
+// 階乗 (Factorial)
 
 export function factorial(n: number): number {
   // 階乗出来ない場合は0を返す

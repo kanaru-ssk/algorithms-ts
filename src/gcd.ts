@@ -1,4 +1,4 @@
-// 最大公約数 (greatest common divisor)
+// 最大公約数 (Greatest Common Divisor)
 
 // ユークリッド互除法
 export function gcd(a: number, b: number): number {
