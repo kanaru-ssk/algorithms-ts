@@ -1,4 +1,4 @@
-// フィボナッチ数列
+// フィボナッチ数列 (fibonacci sequence)
 
 import { dynamicProgramming } from "./dynamicProgramming";
 

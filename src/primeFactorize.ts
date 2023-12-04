@@ -1,4 +1,4 @@
-// 素因数分解
+// 素因数分解 (prime factorization)
 
 type Result = { [key: number]: number };
 

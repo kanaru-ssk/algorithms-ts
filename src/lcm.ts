@@ -1,4 +1,4 @@
-// 最小公倍数
+// 最小公倍数 (least common multiple)
 
 import { gcd } from "./gcd";
 
