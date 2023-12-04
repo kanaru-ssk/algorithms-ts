@@ -6,5 +6,6 @@ export function factorial(n: number): number {
 
   if (n <= 1) return 1;
 
+  // 1まで再帰的に呼び出す
   return n * factorial(n - 1);
 }
