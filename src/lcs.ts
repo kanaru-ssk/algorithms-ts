@@ -9,7 +9,7 @@ export function lcs(a: string, b: string): number {
 
   for (let y = 1; y < tableH; y++) {
     for (let x = 1; x < tableW; x++) {
-      if (a[y - 1] === b[x - 1]) {
+      if (a.charAt(y - 1) === b.charAt(x - 1)) {
         table[y][x] = table[y - 1][x - 1] + 1;
       } else {
         table[y][x] = Math.max(table[y - 1][x], table[y][x - 1]);
