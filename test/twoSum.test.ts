@@ -23,6 +23,13 @@ describe("twoSum", () => {
       },
       expected: [0, 1],
     },
+    {
+      input: {
+        nums: [0, 4, 3, 0],
+        target: 0,
+      },
+      expected: [0, 3],
+    },
   ];
 
   test.each(samples)(
