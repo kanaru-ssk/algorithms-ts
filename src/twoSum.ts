@@ -4,9 +4,8 @@
 // -10^9 <= target <= 10^9
 
 export function twoSum(nums: number[], target: number): number[] {
-  const length = nums.length;
-  for (let y = 0; y < length - 1; y++) {
-    for (let x = 1 + y; x < length; x++) {
+  for (let y = nums.length - 2; y >= 0; --y) {
+    for (let x = nums.length - 1; x > y; --x) {
       if (nums[y] + nums[x] === target) return [y, x];
     }
   }
